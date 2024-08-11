@@ -34,7 +34,7 @@ export const registerCompany = async (req, res) => {
 };
 export const getCompany = async (req, res) => {
   try {
-    const userId = req.id; // logged in user id
+    const userId = req.id; 
     const companies = await Company.find({ userId });
     if (!companies) {
       return res.status(404).json({
@@ -50,7 +50,7 @@ export const getCompany = async (req, res) => {
     console.log(error);
   }
 };
-// get company by id
+
 export const getCompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
