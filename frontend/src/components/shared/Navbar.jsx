@@ -11,7 +11,7 @@ import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 
 const Navbar = () => {
-  const user = false;
+  const user = true;
 
   return (
     <div className="bg-white">
