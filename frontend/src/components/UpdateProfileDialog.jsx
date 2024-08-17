@@ -35,6 +35,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
@@ -59,6 +60,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             console.log(error);
             toast.error(error.response.data.message);
         }
+        finally {
+            setLoading(false); 
+        }
         setOpen(false);
         console.log(input);
         
@@ -73,10 +77,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                     <form onSubmit={submitHandler}>
                         <div className='grid gap-4 py-4'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name" className='text-right'>Name</Label>
+                                <Label htmlFor="fullname" className='text-right'>Name</Label>
                                 <Input 
-                                    id="name"
-                                    name = "name"
+                                    id="fullname"
+                                    name = "fullname"
                                     type="text"
                                     value={input.fullname}
                                     onChange={changeEventHandler}
@@ -98,10 +102,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                         </div>
                         <div className='grid gap-4 py-4'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="number" className='text-right'>Number</Label>
+                                <Label htmlFor="phoneNumber" className='text-right'>Number</Label>
                                 <Input 
-                                    id="number"
-                                    name = "number"
+                                    id="phoneNumber"
+                                    name = "phoneNumber"
                                     value={input.phoneNumber}
                                     onChange={changeEventHandler}
                                     className="col-span-3"    
