@@ -44,7 +44,7 @@ const Profile = () => {
                 </div>
                 <div className='my-5'>
                     <h1>Skills</h1>
-                    <div className='flex items-center gap-1'>    
+                    <div className='flex items-center gap-1'>
                         {
                             user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>): <span>NA</span>
                         }
@@ -53,12 +53,13 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
                     <Label className="text-md font-bold">Resume</Label>
                     {
-                        isResume ? <a target='blank' href='https://youtube.com/@patelmernstack' className='text-blue-500 w-full hover:underline cursor-pointer'>Mern Stack</a> : <span>NA</span>
+                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
                     }
                 </div>
             </div>
             <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
                 <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
+                {/* Applied Job Table   */}
                 <AppliedJobTable />
             </div>
             <UpdateProfileDialog open={open} setOpen={setOpen}/>
