@@ -106,13 +106,13 @@ const Signup = () => {
               alue={input.password}
               name="password"
               onChange={changeEventHandler}
-              placeholder="abcd@gmail.com"
+              placeholder="password"
             />
           </div>
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="default" id="r1" />
+                {/* <RadioGroupItem value="default" id="r1" /> */}
                 <Input
                   type="radio"
                   name="role"
@@ -124,7 +124,7 @@ const Signup = () => {
                 <Label htmlFor="r1">Student</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
+                {/* <RadioGroupItem value="comfortable" id="r2" /> */}
                 <Input
                   type="radio"
                   name="role"
