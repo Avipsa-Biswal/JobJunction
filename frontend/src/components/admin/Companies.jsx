@@ -4,10 +4,17 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import companiesTable from './CompaniesTable'
 import useGetAllCompanies from '@/hooks/useGetAllCompanies'
+import { setSearchCompanyByText } from '@/redux/companySlice'
 
 function Companies() {
     useGetAllCompanies();
+    const [input, SetInput] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch(); 
+    useEffect(()=>{
+        dispatch(setSearchCompanyByText(input));
+    },[input]);
+
   return (
     <div>
         <Navbar/>
@@ -16,6 +23,7 @@ function Companies() {
                 <input 
                     className="w-fit"
                     placeholder="Filter by name" 
+                    onChange={(e) => SetInput(e.target.value)}
                 />
                 <button onClick={() => navigate("/admin/companies/create")}>New Company</button>
             </div>
