@@ -1,3 +1,3 @@
-# JobPortal Website
+# JobJunction Website
 
 WELCOME
