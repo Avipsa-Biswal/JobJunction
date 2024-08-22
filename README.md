@@ -66,13 +66,14 @@ To set up the project locally, follow these steps:
 ## Screenshots
 
 ### Home Page (For Job Seekers)
-![Home Page](./screenshots/screenshot-01.png)
+ ![Screenshot (25)](https://github.com/user-attachments/assets/d7e71bb7-161c-4ec0-ba8d-d618e8766ba2)
 
 ### Home Page (For Employers)
-![Employer Dashboard](./screenshots/screenshot-02.png)
+![Screenshot (24)](https://github.com/user-attachments/assets/93351d61-fbda-4a03-8d75-49c8dd91c842)
 
 ### Login Page
-![Login Page](./screenshots/screenshot-03.png)
+![Screenshot (23)](https://github.com/user-attachments/assets/d7a0cc59-4240-4a42-9198-e70aec5e3cec)
+
 
 ## Technologies Used
 
