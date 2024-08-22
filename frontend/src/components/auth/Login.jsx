@@ -1,129 +1,102 @@
-import React, { useState } from "react";
-import Navbar from "../shared/Navbar";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Button } from "../ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { RiLock2Fill } from "react-icons/ri";
+import { Link, Navigate } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
 import axios from "axios";
-import { USER_API_END_POINT } from "@/utils/constant";
-import { toast } from "sonner";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "@/redux/authSlice";
-import { Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { Context } from "../../main";
 
 const Login = () => {
-  const [input, setInput] = useState({
-    email: "",
-    password: "",
-    role: "",
-  });
-  const { loading } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
-  const submitHandler = async (e) => {
+  const { isAuthorized, setIsAuthorized } = useContext(Context);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      dispatch(setLoading(true));
-      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      if (res.data.success) {
-        dispatch(setUser(res.data.user));
-        navigate("/");
-        toast.success(res.data.message);
-      }
+      const { data } = await axios.post(
+        "http://localhost:4000/api/v1/user/login",
+        { email, password, role },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
+      setEmail("");
+      setPassword("");
+      setRole("");
+      setIsAuthorized(true);
     } catch (error) {
-      console.log(error);
       toast.error(error.response.data.message);
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
+  if (isAuthorized) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
-    <div>
-      <Navbar />
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
-        <form
-          onSubmit={submitHandler}
-          className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
-        >
-          <h1 className="font-bold text-xl mb-5">Login</h1>
-
-          <div className="my-2">
-            <Label>Email</Label>
-            <Input
-              type="email"
-              value={input.email}
-              name="email"
-              onChange={changeEventHandler}
-              placeholder="user"
-            />
+    <>
+      <section className="authPage">
+        <div className="container">
+          <div className="header">
+            <h1>Job Junction</h1>
+            <u className="underL"></u>
+            <h3>Login to your account</h3>
           </div>
-
-          <div className="my-2">
-            <Label>Password</Label>
-            <Input
-              type="password"
-              value={input.password}
-              name="password"
-              onChange={changeEventHandler}
-              placeholder="abcd@gmail.com"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <RadioGroup className="flex items-center gap-4 my-5">
-              <div className="flex items-center space-x-2">
-                {/* <RadioGroupItem value="default" id="r1" /> */}
-                <Input
-                  type="radio"
-                  name="role"
-                  value="student"
-                  onChange={changeEventHandler}
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="r1">Student</Label>
+          <form>
+            <div className="inputTag">
+              <label>Login As</label>
+              <div>
+                <select value={role} onChange={(e) => setRole(e.target.value)}>
+                  <option value="">Select Role</option>
+                  <option value="Employer">Employer</option>
+                  <option value="Job Seeker">Job Seeker</option>
+                </select>
+                <FaRegUser />
               </div>
-              <div className="flex items-center space-x-2">
-                {/* <RadioGroupItem value="comfortable" id="r2" /> */}
-                <Input
-                  type="radio"
-                  name="role"
-                  value="recruiter"
-                  onChange={changeEventHandler}
-                  className="cursor-pointer"
+            </div>
+            <div className="inputTag">
+              <label>Email Address</label>
+              <div>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                <Label htmlFor="r2">Recruiter</Label>
+                <MdOutlineMailOutline />
               </div>
-            </RadioGroup>
-          </div>
-          {loading ? (
-            <Button className="w-full my-4">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait{" "}
-            </Button>
-          ) : (
-            <Button type="submit" className="w-full my-4">
+            </div>
+            <div className="inputTag">
+              <label>Password</label>
+              <div>
+                <input
+                  type="password"
+                  placeholder="Your Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <RiLock2Fill />
+              </div>
+            </div>
+            <button type="submit" onClick={handleLogin}>
               Login
-            </Button>
-          )}
-
-          <span className="text-sm">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-600">
-              Signup
-            </Link>
-          </span>
-        </form>
-      </div>
-    </div>
+            </button>
+            <Link to={"/register"}>Register Now</Link>
+          </form>
+        </div>
+        <div className="banner">
+          <img src="/login.png" alt="login" />
+        </div>
+      </section>
+    </>
   );
 };
 
